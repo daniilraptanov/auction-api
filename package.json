@@ -17,10 +17,8 @@
   },
   "main": "dist/app.js",
   "scripts": {
-    "start": "tsc && node dist/src/app.js",
-    "server": "nodemon --config nodemon.json src/app.ts",
-    "client": "npm run start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "start": "tsc && node dist/app.js",
+    "dev": "nodemon --config nodemon.json src/app.ts"
   },
   "repository": {
     "type": "git",
@@ -44,7 +42,6 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.21",
-    "concurrently": "^8.2.2",
     "nodemon": "^3.0.3",
     "prisma": "^5.9.1",
     "ts-node": "^10.9.2",

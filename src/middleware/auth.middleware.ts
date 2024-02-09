@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import config from "../../configs/config";
+import { Config } from "../config";
 import { sendResponse } from "../tools/response-handler.tools";
 
 const jwt = require("jsonwebtoken");
@@ -16,7 +16,7 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
       return sendResponse(res, StatusCodes.UNAUTHORIZED, "Authorization Error");
     }
 
-    const decoded = jwt.verify(token, config.jwtSecretKey);
+    const decoded = jwt.verify(token, Config.app.JWT_SECRET_KEY);
     req["user"] = decoded;
     next();
   } catch {
