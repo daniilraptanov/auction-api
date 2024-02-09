@@ -1,0 +1,63 @@
+datasource db {
+  url      = env("DATABASE_URL")
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  login    String @unique @db.VarChar(255)
+  password String @db.VarChar(255)
+
+  auctions Auction[]
+  rates    Rate[]
+}
+
+model Auction {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  description String @db.Text
+  status      Int    @db.SmallInt()
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  lastRateId String @unique @db.Uuid
+  lastRate   Rate   @relation(name: "LastRate", fields: [lastRateId], references: [id])
+
+  images Image[]
+  rates  Rate[]
+}
+
+model Image {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  source String @db.VarChar(255)
+
+  auctionId String  @db.Uuid
+  auction   Auction @relation(fields: [auctionId], references: [id])
+}
+
+model Rate {
+  id        String   @id @default(uuid()) @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
+
+  auctionId String  @db.Uuid
+  auction   Auction @relation(fields: [auctionId], references: [id])
+
+  lastRateAuction Auction? @relation(name: "LastRate")
+}
