@@ -53,6 +53,8 @@ model Rate {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  rate Float @db.DoublePrecision
+
   userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
 

@@ -9,6 +9,8 @@ export class UserMapperImpl implements IMapper<IUserModel, IUserDTO> {
         return {
             id: model.id,
             login: model.login,
+            createdAt: model.createdAt,
+            updatedAt: model.updatedAt,
         }
     }
 

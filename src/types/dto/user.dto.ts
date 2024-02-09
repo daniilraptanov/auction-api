@@ -10,5 +10,7 @@ export interface IRegistrationDTO extends ILoginDTO {
 export interface IUserDTO {
     id: string;
     login: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
