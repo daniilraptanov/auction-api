@@ -18,4 +18,12 @@ export class ApiRequest {
     static setValidatedParams(req: Request, params) {
         req["validatedParams"] = params;
     }
+
+    static getAuction(req: Request): IAuctionModel {
+        return req["auction"];
+    }
+
+    static setAuction(req: Request, auction: IAuctionModel) {
+        req["auction"] = auction;
+    }
 }

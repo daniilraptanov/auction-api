@@ -26,10 +26,12 @@ export const updateAuctionSchema = commonAuctionSchema.append({
 });
 
 export const getAllAuctionsSchema = paginationSchema.append({
-    getMainImage: Joi.boolean().optional()
+    getMainImage: Joi.boolean().optional(),
+    getLastRate: Joi.boolean().optional()
 });
 
 export const getAuctionSchema = Joi.object({
     id: Joi.string().required(),
-    getImages: Joi.boolean().optional()
+    getImages: Joi.boolean().optional(),
+    getLastRate: Joi.boolean().optional()
 });
