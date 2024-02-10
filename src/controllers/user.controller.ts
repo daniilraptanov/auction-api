@@ -5,12 +5,12 @@ import { sendResponse } from "../handlers/response.handler";
 import { userServiceFactory } from "../services/user.service";
 import { UserMapperImpl } from "../mappers/user.mapper";
 import { StatusCodes } from "http-status-codes";
+import { logger } from "../handlers/logging.handler";
 
 
 export class UserController {
-  // TODO :: use decorator for logging
+  @logger
   static async registration(req: Request, res: Response): Promise<any> {
-    try {
       const userService = userServiceFactory();
       const userMapper = new UserMapperImpl();
 
@@ -34,13 +34,10 @@ export class UserController {
       };
 
       sendResponse(res, StatusCodes.CREATED, "User was created.", userMapper.toDTO(user));
-    } catch {
-      sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR);
-    }
   }
 
+  @logger
   static async login(req: Request, res: Response): Promise<any> {
-    try {
       const userService = userServiceFactory();
       const userMapper = new UserMapperImpl();
 
@@ -62,10 +59,7 @@ export class UserController {
         return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Token does not created!");
       }
   
-      sendResponse(res, StatusCodes.OK, "User was login!", {token: token, user: userMapper.toDTO(user)}); // TODO :: use mapper
-    } catch {
-      sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR);
-    }
+      sendResponse(res, StatusCodes.OK, "User was login!", {token: token, user: userMapper.toDTO(user)});
   }
 }
 
