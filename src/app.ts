@@ -7,7 +7,7 @@ import { Config } from "./config";
 const app = express();
 
 app.use(express.json());
-app.use("/api/v1/user-auth", require("./routes/user-auth.routes"));
+app.use("/api/v1/auth", require("./routes/user-auth.routes"));
 
 
 // db.db

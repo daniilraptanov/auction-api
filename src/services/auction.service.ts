@@ -45,10 +45,17 @@ class AuctionServiceImpl extends SimpleService implements IAuctionService {
         });
     }
 
-    async getAllAuctions(page: number, limit: number, getImages: boolean): Promise<IAuctionModel[]> {
+    async getAllAuctions(page: number, limit: number, getMainImage: boolean): Promise<IAuctionModel[]> {
         const { take, skip } = PaginationService.calculateOffset(page, limit);
         return this._dbInstance.auction.findMany({
-            take, skip, include: { images: getImages }
+            take, skip, include: { images: { take: +getMainImage } }
+        });
+    }
+
+    async getAuctionById(id: string, getImages: boolean): Promise<IAuctionModel> {
+        return this._dbInstance.auction.findFirst({
+            where: { id },
+            include: { images: getImages }
         });
     }
 }

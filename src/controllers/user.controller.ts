@@ -16,10 +16,6 @@ export class UserController {
 
       const data: IRegistrationDTO = req.body;
 
-      if (data.password !== data.confirmPassword) { // TODO :: replace to service
-        return sendResponse(res, StatusCodes.BAD_REQUEST, "Confirm-password is wrong");
-      }
-
       if (await userService.getUserByLogin(data.login)) {
         return sendResponse(res, StatusCodes.BAD_REQUEST, "This login is used.");
       }
@@ -33,6 +29,7 @@ export class UserController {
         sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "User does not created.");
       };
 
+      // TODO :: send token
       sendResponse(res, StatusCodes.CREATED, "User was created.", userMapper.toDTO(user));
   }
 
@@ -59,6 +56,7 @@ export class UserController {
         return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Token does not created!");
       }
   
+      // TODO :: send token in user-dto
       sendResponse(res, StatusCodes.OK, "User was login!", {token: token, user: userMapper.toDTO(user)});
   }
 }
