@@ -1,18 +1,10 @@
 import { IUserDTO } from "../types/dto/user.dto";
-import { IMapper } from "../types/tools/mapper.type";
 import { IUserModel } from "../types/user.type";
+import { SimpleMapper } from "./simple.mapper";
 
-
-// TODO :: use arrays with names of fields for mapping
-export class UserMapperImpl implements IMapper<IUserModel, IUserDTO> {
-    toDTO(model: IUserModel): IUserDTO {
-        return {
-            id: model.id,
-            login: model.login,
-            createdAt: model.createdAt,
-            updatedAt: model.updatedAt,
-        }
-    }
+export class UserMapperImpl extends SimpleMapper<IUserModel, IUserDTO> {
+    protected _fromDTOFields: string[] = [];
+    protected _toDTOFields: string[] = ["id", "login", "createdAt", "updatedAt"];
 
     fromDTO(_dto: IUserDTO): IUserModel {
         throw new Error("User should be create via IRegistrationDTO");
