@@ -52,11 +52,17 @@ class AuctionServiceImpl extends SimpleService implements IAuctionService {
         getLastRate: boolean = false
     ): Promise<IAuctionModel[]> {
         const { take, skip } = PaginationService.calculateOffset(page, limit);
+        
+        const include = {};
+        if (getMainImage) {
+            include["images"] = { take: 1 };
+        }
+        if (getLastRate) {
+            include["lastRate"] = true;
+        }
+        
         return this._dbInstance.auction.findMany({
-            take, skip, include: { 
-                images: { take: Number(getMainImage) }, 
-                lastRate: getLastRate
-            }
+            take, skip, include
         });
     }
 
@@ -65,9 +71,16 @@ class AuctionServiceImpl extends SimpleService implements IAuctionService {
         getImages: boolean = false, 
         getLastRate: boolean = false
     ): Promise<IAuctionModel> {
+        const include = {};
+        if (getImages) {
+            include["images"] = true;
+        }
+        if (getLastRate) {
+            include["lastRate"] = true;
+        }
+
         return this._dbInstance.auction.findFirst({
-            where: { id },
-            include: { images: getImages, lastRate: getLastRate }
+            where: { id }, include
         });
     }
 }
