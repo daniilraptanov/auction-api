@@ -4,7 +4,7 @@ import { ApiRequest } from "../handlers/request.handler";
 import { sendResponse } from "../handlers/response.handler";
 import { auctionServiceFactory } from "../services/auction.service";
 
-export const checkAuctionOwner = (paramName = "id", setAuctionToReq = false) => {
+export const checkAuctionOwner = (paramName = "id") => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const auctionId = req.params[paramName];
     const user = ApiRequest.getUserDTO(req);
@@ -17,10 +17,6 @@ export const checkAuctionOwner = (paramName = "id", setAuctionToReq = false) => 
 
     if (auction.userId !== user.id) {
         return sendResponse(res, StatusCodes.UNAUTHORIZED, "User can not have access to this resource.");
-    }
-
-    if (setAuctionToReq) {
-        ApiRequest.setAuction(req, auction);
     }
 
     next();

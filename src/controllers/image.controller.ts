@@ -13,16 +13,11 @@ export class ImageController {
     const imageService = imageServiceFactory();
     const imageMapper = new ImageMapperImpl();
 
-    const data: ICreateImageDTO = ApiRequest.getValidatedParams(req);
-      
-    const auction = ApiRequest.getAuction(req);
-    if (!auction) {
-        return sendResponse(res, StatusCodes.NOT_FOUND, "Auction not found.");
-    }
+    const { auctionId, ...data} = ApiRequest.getValidatedParams(req);
 
-    const image = await imageService.createImage(data, auction.id);
+    const image = await imageService.createImage(data as ICreateImageDTO, auctionId);
     if (!image) {
-        sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Image does not created.");
+        return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Image does not created.");
     };
 
     sendResponse(res, StatusCodes.CREATED, "Image was created.", imageMapper.toDTO(image));
@@ -36,7 +31,7 @@ export class ImageController {
     
     const isDeleted = await imageService.deleteImage(id);
     if (!isDeleted) {
-        sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Image does not deleted.");
+        return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Image does not deleted.");
     };
 
     sendStatusResponse(res, StatusCodes.CREATED, "Image was deleted.", isDeleted);

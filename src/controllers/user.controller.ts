@@ -29,7 +29,7 @@ export class UserController {
       });
 
       if (!user) {
-        sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "User does not created.");
+        return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "User does not created.");
       };
 
       const token = TokenService.createAuthToken(user);

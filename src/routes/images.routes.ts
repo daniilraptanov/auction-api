@@ -9,7 +9,7 @@ const ImagesRouter = Router();
 ImagesRouter.post(
   "/:auctionId",
   validateParams(imageSchema),
-  checkAuctionOwner("auctionId", true),
+  checkAuctionOwner("auctionId"),
   ImageController.createImage
 );
 

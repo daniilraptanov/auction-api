@@ -33,7 +33,6 @@ AuctionsRouter.patch(
 AuctionsRouter.get(
   "/:id",
   validateParams(getAuctionSchema),
-  checkAuctionOwner("id", true),
   AuctionController.getAuctionById
 );
 

@@ -61,14 +61,9 @@ export class AuctionController {
 
         const { id, getImages } = ApiRequest.getValidatedParams(req);
 
-        const plainAuction = ApiRequest.getAuction(req);
-        if (!getImages && plainAuction) {
-            return sendResponse(res, StatusCodes.OK, "Auction was returned", auctionMapper.toDTO(plainAuction));
-        }
-
         const auction = await auctionService.getAuctionById(id, getImages);
         if (!auction) {
-            return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR);
+            return sendResponse(res, StatusCodes.NOT_FOUND, "Auction not found.");
         }
 
         sendResponse(res, StatusCodes.OK, "Auction was returned.", auctionMapper.toDTO(auction));
