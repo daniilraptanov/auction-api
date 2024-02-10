@@ -6,7 +6,7 @@ export interface IUserService {
   createUser(dto: IRegistrationDTO): Promise<IUserModel>;
   getUserByLogin(login: string): Promise<IUserModel>;
 
-  checkPasswordHash(dto: IUserModel): Promise<boolean>; // TODO :: replace to CryptoService
+  checkPasswordHash(password: string, hash: string): Promise<boolean>; // TODO :: replace to CryptoService
   hashedPassword(password: string): Promise<string>; // TODO :: replace to CryptoService
 
   createToken(dto: IUserDTO): string; // TODO :: replace to TokenService

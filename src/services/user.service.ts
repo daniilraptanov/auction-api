@@ -26,8 +26,8 @@ class UserServiceImpl extends SimpleService implements IUserService {
     return await bcrypt.hash(password, 12);
   }
 
-  async checkPasswordHash(dto: ILoginDTO): Promise<boolean> {
-    return await bcrypt.compare(dto.password, dto.password);
+  async checkPasswordHash(password: string, hash: string): Promise<boolean> {
+    return await bcrypt.compare(password, hash);
   }
 
   createToken(dto: IUserDTO): string {

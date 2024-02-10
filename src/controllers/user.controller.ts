@@ -46,7 +46,7 @@ export class UserController {
         return sendResponse(res, StatusCodes.NOT_FOUND, "User does not exist.");
       }
       
-      if (!await userService.checkPasswordHash(user)) {
+      if (!await userService.checkPasswordHash(data.password, user.password)) {
         return sendResponse(res, StatusCodes.BAD_REQUEST, "Password is wrong!");
       }
 
