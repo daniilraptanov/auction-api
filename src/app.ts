@@ -8,6 +8,7 @@ const cors = require("cors");
 
 // TODO :: use imports instead require
 const API_V1 = "/api/v1";
+Config.setVariables();
 
 const app = express();
 

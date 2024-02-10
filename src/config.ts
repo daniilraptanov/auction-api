@@ -9,16 +9,28 @@ enum Environment {
 
 export class Config {
     static app = {
-        PORT: parseInt(process.env['PORT']) || DEFAULT_PORT,
-        JWT_SECRET_KEY: process.env['JWT_SECRET_KEY'],
-        NODE_ENV: process.env['NODE_ENV'] || Environment.DEV,
+        PORT: DEFAULT_PORT,
+        JWT_SECRET_KEY: undefined,
+        NODE_ENV: Environment.DEV
     }
 
     static db = {
-        DATABASE_URL: process.env['DATABASE_URL'],
+        DATABASE_URL: undefined
     }
 
     static get isProduction() {
         return Config.app.NODE_ENV === Environment.PROD;
+    }
+
+    static setVariables() {
+        Config.app = {
+            PORT: parseInt(process.env['PORT']),
+            JWT_SECRET_KEY: process.env['JWT_SECRET_KEY'],
+            NODE_ENV: process.env['NODE_ENV'] as Environment,
+        }
+
+        Config.db = {
+            DATABASE_URL: process.env['DATABASE_URL']
+        }
     }
 }
