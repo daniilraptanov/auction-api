@@ -1,14 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { ObjectSchema } from "joi";
+import { ApiRequest } from "../handlers/request.handler";
 import { sendResponse } from "../handlers/response.handler";
 
-
-// TODO :: use type for schema
-export const validateParams = (schema: any) => {
+export const validateParams = (schema: ObjectSchema) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    const { error } = schema.validate(req.body);
+    const params = { ...req.body, ...req.query, ...req.params }
+    const { error } = schema.validate(params);
 
     if (!error) {
+      ApiRequest.setValidatedParams(req, params);
       next();
     }
 

@@ -6,8 +6,6 @@ import { SimpleMapper } from "./simple.mapper";
 
 export class AuctionMapperImpl extends SimpleMapper<IAuctionModel, IAuctionDTO> {
     private _commonDTOFields = ["description", "status"];
-    
-    protected _fromDTOFields: string[] = [...this._commonDTOFields, "initialRate"];
     protected _toDTOFields: string[] = [
         ...this._commonDTOFields,
         "id",

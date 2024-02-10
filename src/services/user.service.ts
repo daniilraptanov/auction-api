@@ -31,7 +31,7 @@ class UserServiceImpl extends SimpleService implements IUserService {
   }
 
   createToken(dto: IUserDTO): string {
-    return jwt.sign({ userId: dto.id }, Config.app.JWT_SECRET_KEY, {
+    return jwt.sign(dto, Config.app.JWT_SECRET_KEY, {
       expiresIn: "5h", // TODO :: use environment variable
     });
   }

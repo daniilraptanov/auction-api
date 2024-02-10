@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response } from "express";
+import { Request, Response } from "express";
 import { IUserModel } from "../types/user.type";
 import { ILoginDTO, IRegistrationDTO } from "../types/dto/user.dto";
 import { sendResponse } from "../handlers/response.handler";
@@ -10,7 +10,7 @@ import { logger } from "../handlers/logging.handler";
 
 export class UserController {
   @logger
-  static async registration(req: Request, res: Response): Promise<any> {
+  static async registration(req: Request, res: Response) {
       const userService = userServiceFactory();
       const userMapper = new UserMapperImpl();
 
@@ -34,7 +34,7 @@ export class UserController {
   }
 
   @logger
-  static async login(req: Request, res: Response): Promise<any> {
+  static async login(req: Request, res: Response) {
       const userService = userServiceFactory();
       const userMapper = new UserMapperImpl();
 

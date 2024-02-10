@@ -52,7 +52,7 @@ class AuctionServiceImpl extends SimpleService implements IAuctionService {
         });
     }
 
-    async getAuctionById(id: string, getImages: boolean): Promise<IAuctionModel> {
+    async getAuctionById(id: string, getImages: boolean = false): Promise<IAuctionModel> {
         return this._dbInstance.auction.findFirst({
             where: { id },
             include: { images: getImages }

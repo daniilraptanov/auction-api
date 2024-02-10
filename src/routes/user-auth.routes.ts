@@ -3,18 +3,18 @@ import { validateParams } from "../middleware/validate-params.middleware";
 import { loginSchema, registrationSchema } from "../schemas/user-auth.schemas";
 
 const { Router } = require("express");
-const router = Router();
+const AuthRouter = Router();
 
-router.post(
+AuthRouter.post(
   "/registration",
   validateParams(registrationSchema),
   UserController.registration
 );
 
-router.post(
+AuthRouter.post(
   "/login", 
   validateParams(loginSchema),
   UserController.login  
 );
 
-module.exports = router;
+export { AuthRouter };
