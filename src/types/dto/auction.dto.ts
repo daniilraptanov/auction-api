@@ -15,9 +15,9 @@ export interface IAuctionDTO extends IPlainAuctionDTO {
     id: string;
     userId: string;
 
-    lastRate: IRateDTO;
-    images: ImageDTO[];
-    rates: IRateDTO[];
+    lastRate?: IRateDTO;
+    images?: ImageDTO[];
+    rates?: IRateDTO[];
 
     createdAt: Date;
     updatedAt: Date;

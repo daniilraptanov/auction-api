@@ -30,8 +30,8 @@ model Auction {
   userId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
 
-  lastRateId String @unique @db.Uuid
-  lastRate   Rate   @relation(name: "LastRate", fields: [lastRateId], references: [id])
+  lastRateId String? @unique @db.Uuid
+  lastRate   Rate?   @relation(name: "LastRate", fields: [lastRateId], references: [id])
 
   images Image[]
   rates  Rate[]

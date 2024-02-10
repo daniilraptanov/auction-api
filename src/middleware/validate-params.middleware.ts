@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { sendResponse } from "../tools/response-handler.tools";
+import { sendResponse } from "../handlers/response.handler";
 
 
 // TODO :: use type for schema

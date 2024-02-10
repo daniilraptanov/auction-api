@@ -3,8 +3,8 @@ import { IAuctionDTO, ICreateAuctionDTO, IPlainAuctionDTO } from "./dto/auction.
 export interface IAuctionModel extends IAuctionDTO {}
 
 export interface IAuctionService {
-    createAuction(dto: ICreateAuctionDTO): Promise<IAuctionModel>;
-    updateAuction(id: string, dto: IPlainAuctionDTO): Promise<IAuctionModel>;
+    createAuction(dto: ICreateAuctionDTO, userId: string): Promise<IAuctionModel>;
+    updateAuction(dto: IPlainAuctionDTO, id: string): Promise<IAuctionModel>;
     getAllAuctions(page: number, limit: number, getImages: boolean): Promise<IAuctionModel[]>;
 }
 

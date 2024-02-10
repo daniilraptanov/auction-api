@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
 import { Config } from "../config";
-import { sendResponse } from "../tools/response-handler.tools";
+import { sendResponse } from "../handlers/response.handler";
 
 const jwt = require("jsonwebtoken");
 

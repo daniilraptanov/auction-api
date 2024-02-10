@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { IUserModel } from "../types/user.type";
 import { ILoginDTO, IRegistrationDTO } from "../types/dto/user.dto";
-import { sendResponse } from "../tools/response-handler.tools";
+import { sendResponse } from "../handlers/response.handler";
 import { userServiceFactory } from "../services/user.service";
 import { UserMapperImpl } from "../mappers/user.mapper";
 import { StatusCodes } from "http-status-codes";
