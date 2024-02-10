@@ -4,11 +4,14 @@ import { auth } from "./middleware/auth.middleware";
 import { AuctionsRouter } from "./routes/auctions.routes";
 import { AuthRouter } from "./routes/user-auth.routes";
 
+const cors = require("cors");
+
 // TODO :: use imports instead require
 const API_V1 = "/api/v1";
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 // Public routes
