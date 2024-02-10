@@ -13,11 +13,11 @@ class UserServiceImpl implements IUserService {
     });
   }
 
-  async createUser(user: IRegistrationDTO): Promise<IUserModel> {
+  async createUser(dto: IRegistrationDTO): Promise<IUserModel> {
     return Prisma.instance.user.create({
       data: {
-        login: user.login,
-        password: user.password,
+        login: dto.login,
+        password: dto.password,
       }
     });
   }
@@ -26,12 +26,12 @@ class UserServiceImpl implements IUserService {
     return await bcrypt.hash(password, 12);
   }
 
-  async checkPasswordHash(user: ILoginDTO): Promise<boolean> {
-    return await bcrypt.compare(user.password, user.password);
+  async checkPasswordHash(dto: ILoginDTO): Promise<boolean> {
+    return await bcrypt.compare(dto.password, dto.password);
   }
 
-  createToken(user: IUserDTO): string {
-    return jwt.sign({ userId: user.id }, Config.app.JWT_SECRET_KEY, {
+  createToken(dto: IUserDTO): string {
+    return jwt.sign({ userId: dto.id }, Config.app.JWT_SECRET_KEY, {
       expiresIn: "5h", // TODO :: use environment variable
     });
   }
