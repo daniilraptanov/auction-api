@@ -5,7 +5,6 @@ import { ApiRequest } from "../handlers/request.handler";
 import { sendResponse } from "../handlers/response.handler";
 import { TokenService } from "../services/token.service";
 
-const jwt = require("jsonwebtoken");
 
 export const auth = (req: Request, res: Response, next: NextFunction) => {
   if (req.method === "OPTIONS") {

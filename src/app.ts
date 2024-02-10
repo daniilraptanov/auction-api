@@ -6,7 +6,6 @@ import { AuthRouter } from "./routes/user-auth.routes";
 
 const cors = require("cors");
 
-// TODO :: use imports instead require
 const API_V1 = "/api/v1";
 Config.setVariables();
 

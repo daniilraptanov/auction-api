@@ -1,3 +1,4 @@
+import { Router } from "express";
 import { AuctionController } from "../controllers/auction.controller";
 import { checkAuctionOwner } from "../middleware/check-owner.middleware";
 import { validateParams } from "../middleware/validate-params.middleware";
@@ -8,7 +9,6 @@ import {
   updateAuctionSchema,
 } from "../schemas/auction.schemas";
 
-const { Router } = require("express");
 const AuctionsRouter = Router();
 
 AuctionsRouter.post(
