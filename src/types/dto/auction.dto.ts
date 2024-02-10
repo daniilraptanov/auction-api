@@ -4,7 +4,7 @@ import { IRateDTO } from "./rate.dto";
 
 export interface IPlainAuctionDTO {
     description: string;
-    status: AuctionStatus;
+    status?: AuctionStatus;
 }
 
 export interface ICreateAuctionDTO extends IPlainAuctionDTO {

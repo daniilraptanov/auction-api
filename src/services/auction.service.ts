@@ -30,7 +30,7 @@ class AuctionServiceImpl extends SimpleService implements IAuctionService {
                 throw new Error("Initial rate was not created.");
             }
     
-            return this._dbInstance.auction.update({
+            return prisma.auction.update({
                 data: { lastRateId: initialRate.id },
                 where: { id: auction.id },
                 include: { lastRate: true }

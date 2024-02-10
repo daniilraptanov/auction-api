@@ -9,7 +9,7 @@ const commonAuctionSchema = Joi.object({
         AuctionStatus.CREATED,
         AuctionStatus.PROCESSING,
         AuctionStatus.FINISHED,
-    ).required()
+    ).optional()
 });
 
 export const createAuctionSchema = commonAuctionSchema.append({
