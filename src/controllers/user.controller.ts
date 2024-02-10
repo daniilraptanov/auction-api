@@ -8,6 +8,7 @@ import { StatusCodes } from "http-status-codes";
 import { logger } from "../handlers/logging.handler";
 import { CryptoService } from "../services/crypto.service";
 import { TokenService } from "../services/token.service";
+import { ApiRequest } from "../handlers/request.handler";
 
 
 export class UserController {
@@ -16,7 +17,7 @@ export class UserController {
       const userService = userServiceFactory();
       const userMapper = new UserMapperImpl();
 
-      const data: IRegistrationDTO = req.body;
+      const data: IRegistrationDTO = ApiRequest.getValidatedParams(req);
 
       if (await userService.getUserByLogin(data.login)) {
         return sendResponse(res, StatusCodes.BAD_REQUEST, "This login is used.");
@@ -45,7 +46,7 @@ export class UserController {
       const userService = userServiceFactory();
       const userMapper = new UserMapperImpl();
 
-      const data: ILoginDTO = req.body;
+      const data: ILoginDTO = ApiRequest.getValidatedParams(req);
       
       const user: IUserModel = await userService.getUserByLogin(data.login);
 

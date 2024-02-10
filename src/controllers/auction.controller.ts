@@ -61,8 +61,8 @@ export class AuctionController {
 
         const { id, getImages } = ApiRequest.getValidatedParams(req);
 
-        if (!getImages) {
-            const plainAuction = ApiRequest.getAuction(req);
+        const plainAuction = ApiRequest.getAuction(req);
+        if (!getImages && plainAuction) {
             return sendResponse(res, StatusCodes.OK, "Auction was returned", auctionMapper.toDTO(plainAuction));
         }
 

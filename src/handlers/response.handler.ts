@@ -12,3 +12,12 @@ export const sendResponse = (
     data,
   });
 };
+
+export const sendStatusResponse = (
+  res: Response,
+  status: StatusCodes,
+  message: string = "",
+  dataStatus: boolean
+) => {
+  return sendResponse(res, status, message, { status: dataStatus });
+}

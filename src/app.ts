@@ -2,6 +2,7 @@ import express from "express";
 import { Config } from "./config";
 import { auth } from "./middleware/auth.middleware";
 import { AuctionsRouter } from "./routes/auctions.routes";
+import { ImagesRouter } from "./routes/images.routes";
 import { AuthRouter } from "./routes/user-auth.routes";
 
 const cors = require("cors");
@@ -20,16 +21,8 @@ app.use(`${API_V1}/auth`, AuthRouter);
 // Need authorization
 app.use(API_V1, auth);
 app.use(`${API_V1}/auctions`, AuctionsRouter);
+app.use(`${API_V1}/images`, ImagesRouter);
 
-
-
-// TODO
-// db.db
-//   .sync()
-//   .then(() => {
-    
-//   })
-//   .catch((err) => console.log(err));
 
 app.listen(Config.app.PORT, () => {
   try {
