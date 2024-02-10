@@ -32,5 +32,13 @@ export class Config {
         Config.db = {
             DATABASE_URL: process.env['DATABASE_URL']
         }
+
+        if (!Config.app.JWT_SECRET_KEY) {
+            throw new Error("JWT_SECRET_KEY not provided.");
+        }
+
+        if (!Config.db.DATABASE_URL) {
+            throw new Error("DATABASE_URL not provided.");
+        }
     }
 }
