@@ -1,6 +1,8 @@
 
 const DEFAULT_PORT = 5000;
 
+const DEFAULT_TOKEN_EXPIRES_HOURS = 5;
+
 enum Environment {
     DEV = 'development',
     PROD = 'production',
@@ -11,7 +13,8 @@ export class Config {
     static app = {
         PORT: DEFAULT_PORT,
         JWT_SECRET_KEY: undefined,
-        NODE_ENV: Environment.DEV
+        NODE_ENV: Environment.DEV,
+        TOKEN_EXPIRES_HOURS: DEFAULT_TOKEN_EXPIRES_HOURS
     }
 
     static db = {
@@ -27,6 +30,7 @@ export class Config {
             PORT: parseInt(process.env['PORT']),
             JWT_SECRET_KEY: process.env['JWT_SECRET_KEY'],
             NODE_ENV: process.env['NODE_ENV'] as Environment,
+            TOKEN_EXPIRES_HOURS: parseInt(process.env['TOKEN_EXPIRES_HOURS'])
         }
 
         Config.db = {

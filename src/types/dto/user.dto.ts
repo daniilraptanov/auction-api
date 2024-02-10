@@ -12,5 +12,7 @@ export interface IUserDTO {
     login: string;
     createdAt: Date;
     updatedAt: Date;
+    
+    token?: string;
 }
 

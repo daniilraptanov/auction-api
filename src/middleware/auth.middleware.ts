@@ -3,6 +3,7 @@ import { StatusCodes } from "http-status-codes";
 import { Config } from "../config";
 import { ApiRequest } from "../handlers/request.handler";
 import { sendResponse } from "../handlers/response.handler";
+import { TokenService } from "../services/token.service";
 
 const jwt = require("jsonwebtoken");
 
@@ -17,8 +18,7 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
       return sendResponse(res, StatusCodes.UNAUTHORIZED, "Authorization Error");
     }
 
-    // TODO :: replace to service
-    const decoded = jwt.verify(token, Config.app.JWT_SECRET_KEY);
+    const decoded = TokenService.decodeAuthToken(token)
     ApiRequest.setUserDTO(req, decoded);
     next();
   } catch {

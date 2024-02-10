@@ -6,6 +6,8 @@ import { userServiceFactory } from "../services/user.service";
 import { UserMapperImpl } from "../mappers/user.mapper";
 import { StatusCodes } from "http-status-codes";
 import { logger } from "../handlers/logging.handler";
+import { CryptoService } from "../services/crypto.service";
+import { TokenService } from "../services/token.service";
 
 
 export class UserController {
@@ -22,15 +24,20 @@ export class UserController {
 
       const user: IUserModel = await userService.createUser({
         ...data,
-        password: await userService.hashedPassword(data.password),
+        password: await CryptoService.hashedPassword(data.password),
       });
 
       if (!user) {
         sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "User does not created.");
       };
 
-      // TODO :: send token
-      sendResponse(res, StatusCodes.CREATED, "User was created.", userMapper.toDTO(user));
+      const token = TokenService.createAuthToken(user);
+  
+      if (!token) {
+        return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Token does not created!");
+      }
+
+      sendResponse(res, StatusCodes.CREATED, "User was created.", userMapper.toAuthDTO(user, token));
   }
 
   @logger
@@ -46,18 +53,17 @@ export class UserController {
         return sendResponse(res, StatusCodes.NOT_FOUND, "User does not exist.");
       }
       
-      if (!await userService.checkPasswordHash(data.password, user.password)) {
+      if (!await CryptoService.checkPasswordHash(data.password, user.password)) {
         return sendResponse(res, StatusCodes.BAD_REQUEST, "Password is wrong!");
       }
 
-      const token = userService.createToken(user);
+      const token = TokenService.createAuthToken(user);
   
       if (!token) {
         return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Token does not created!");
       }
   
-      // TODO :: send token in user-dto
-      sendResponse(res, StatusCodes.OK, "User was login!", {token: token, user: userMapper.toDTO(user)});
+      sendResponse(res, StatusCodes.OK, "User was login!", userMapper.toAuthDTO(user, token));
   }
 }
 
