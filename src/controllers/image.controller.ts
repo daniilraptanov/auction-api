@@ -34,7 +34,7 @@ export class ImageController {
         return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Image does not deleted.");
     };
 
-    sendStatusResponse(res, StatusCodes.CREATED, "Image was deleted.", isDeleted);
+    sendStatusResponse(res, StatusCodes.OK, "Image was deleted.", isDeleted);
   }
 }
 

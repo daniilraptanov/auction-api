@@ -33,7 +33,17 @@ export class RateController {
 
   @logger
   static async getAllRates(req: Request, res: Response) {
-    // TODO
+    const rateService = rateServiceFactory();
+    const rateMapper = new RateMapperImpl();
+
+    const { page, limit, auctionId } = ApiRequest.getValidatedParams(req);
+
+    const rates = await rateService.getAllRates(page, limit, auctionId);
+    if (!rates) {
+        return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR);
+    };
+
+    sendResponse(res, StatusCodes.OK, "Rates was returned", rates.map(rate => rateMapper.toDTO(rate)));
   }
 }
 
