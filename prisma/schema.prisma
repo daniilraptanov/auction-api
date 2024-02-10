@@ -42,7 +42,7 @@ model Image {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  source String @db.VarChar(255)
+  source String @db.Text
 
   auctionId String  @db.Uuid
   auction   Auction @relation(fields: [auctionId], references: [id])
