@@ -2,6 +2,7 @@ import Joi from "joi";
 
 
 export const commonImageSchema = Joi.object({
+    id: Joi.string().optional(),
     source: Joi.string().required()
 });
 
