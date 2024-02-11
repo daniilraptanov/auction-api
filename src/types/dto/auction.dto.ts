@@ -22,3 +22,6 @@ export interface IAuctionDTO extends IPlainAuctionDTO {
     createdAt: Date;
     updatedAt: Date;
 }
+export interface IExtendAuctionDTO extends IAuctionDTO {
+    userIsOwner?: boolean;
+}

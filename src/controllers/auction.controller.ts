@@ -60,12 +60,13 @@ export class AuctionController {
         const auctionMapper = new AuctionMapperImpl();
 
         const { id, getImages, getLastRate } = ApiRequest.getValidatedParams(req);
+        const user = ApiRequest.getUserDTO(req);
 
         const auction = await auctionService.getAuctionById(id, getImages, getLastRate);
         if (!auction) {
             return sendResponse(res, StatusCodes.NOT_FOUND, "Auction not found.");
         }
 
-        sendResponse(res, StatusCodes.OK, "Auction was returned.", auctionMapper.toDTO(auction));
+        sendResponse(res, StatusCodes.OK, "Auction was returned.", auctionMapper.toExtendDTO(auction, user.id));
     }
 }

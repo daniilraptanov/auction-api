@@ -4,6 +4,8 @@ import { ApiRequest } from "../handlers/request.handler";
 import { sendResponse } from "../handlers/response.handler";
 import { auctionServiceFactory } from "../services/auction.service";
 
+
+// TODO
 export const checkAuctionStatus = (auctionIdParam = "id", requiredStatus) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const auctionId = req.params[auctionIdParam];

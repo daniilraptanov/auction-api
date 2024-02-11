@@ -1,6 +1,10 @@
-import { IAuctionDTO, ICreateAuctionDTO, IPlainAuctionDTO } from "./dto/auction.dto";
+import { IAuctionDTO, ICreateAuctionDTO, IExtendAuctionDTO, IPlainAuctionDTO } from "./dto/auction.dto";
 
 export interface IAuctionModel extends IAuctionDTO {}
+
+export interface IAuctionMapper {
+    toExtendDTO(model: IAuctionModel, currentUserId: string): IExtendAuctionDTO;
+}
 
 export interface IAuctionService {
     createAuction(dto: ICreateAuctionDTO, userId: string): Promise<IAuctionModel>;
