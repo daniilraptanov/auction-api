@@ -2,6 +2,7 @@
 const DEFAULT_PORT = 5000;
 
 const DEFAULT_TOKEN_EXPIRES_HOURS = 5;
+const DEFAULT_JSON_LIMIT_MB = 10;
 
 enum Environment {
     DEV = 'development',
@@ -12,6 +13,7 @@ enum Environment {
 export class Config {
     static app = {
         PORT: DEFAULT_PORT,
+        JSON_LIMIT_MB: DEFAULT_JSON_LIMIT_MB,
         JWT_SECRET_KEY: undefined,
         NODE_ENV: Environment.DEV,
         TOKEN_EXPIRES_HOURS: DEFAULT_TOKEN_EXPIRES_HOURS
@@ -28,6 +30,7 @@ export class Config {
     static setVariables() {
         Config.app = {
             PORT: parseInt(process.env['PORT']),
+            JSON_LIMIT_MB: parseInt(process.env['JSON_LIMIT_MB']),
             JWT_SECRET_KEY: process.env['JWT_SECRET_KEY'],
             NODE_ENV: process.env['NODE_ENV'] as Environment,
             TOKEN_EXPIRES_HOURS: parseInt(process.env['TOKEN_EXPIRES_HOURS'])

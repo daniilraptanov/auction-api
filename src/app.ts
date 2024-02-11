@@ -14,7 +14,7 @@ Config.setVariables();
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: `${Config.app.JSON_LIMIT_MB}mb` }));
 
 // Public routes
 app.use(`${API_V1}/auth`, AuthRouter);
