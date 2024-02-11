@@ -22,12 +22,17 @@ class RateServiceImpl extends SimpleService implements IRateService {
         });
     }
 
-    async getAllRates(page: number, limit: number, auctionId: string): Promise<IPaginateModel<IRateModel>> {
+    async getAllRates(page: number, limit: number, auctionId: string, getUserName?: boolean): Promise<IPaginateModel<IRateModel>> {
         const { take, skip } = PaginationService.calculateOffset(page, limit);
         const where = { auctionId };
 
+        const include = {};
+        if (getUserName) {
+            include["user"] = true;
+        }
+
         const [rows, totalRows] = await this._dbInstance.$transaction([
-            this._dbInstance.rate.findMany({ take, skip, where }),
+            this._dbInstance.rate.findMany({ take, skip, where, include }),
             this._dbInstance.rate.count({ where })
         ]);
 

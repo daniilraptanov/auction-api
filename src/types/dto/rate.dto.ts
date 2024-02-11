@@ -5,6 +5,7 @@ export interface ICreateRateDTO {
 export interface IRateDTO extends ICreateRateDTO {
     id: string;
     userId: string;
+    userName?: string;
     auctionId: string;
 
     createdAt: Date;

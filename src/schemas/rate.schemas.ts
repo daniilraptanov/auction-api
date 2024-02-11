@@ -13,5 +13,6 @@ export const rateSchema = Joi.object({
 });
 
 export const getAllRatesSchema = paginationSchema.append({
-    auctionId: Joi.string().guid({ version: 'uuidv4' }).required()
+    auctionId: Joi.string().guid({ version: 'uuidv4' }).required(),
+    getUserName: Joi.boolean().optional()
 });

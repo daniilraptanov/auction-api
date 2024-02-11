@@ -37,9 +37,9 @@ export class RateController {
     const rateService = rateServiceFactory();
     const rateMapper = new RateMapperImpl();
 
-    const { page, limit, auctionId } = ApiRequest.getValidatedParams(req);
+    const { page, limit, auctionId, getUserName } = ApiRequest.getValidatedParams(req);
 
-    const rates = await rateService.getAllRates(page, limit, auctionId);
+    const rates = await rateService.getAllRates(page, limit, auctionId, getUserName);
     if (!rates) {
         return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR);
     };

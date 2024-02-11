@@ -11,5 +11,11 @@ export class RateMapperImpl extends SimpleMapper<IRateModel, IRateDTO> {
         "createdAt",
         "updatedAt"
     ];
+
+    toDTO(model: IRateModel): IRateDTO {
+        const dto = super.toDTO(model);
+        dto.userName = model.user?.login || "";
+        return dto;
+    }
 }
 
