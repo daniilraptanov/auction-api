@@ -4,19 +4,20 @@ import { logger } from "../handlers/logging.handler";
 import { ApiRequest } from "../handlers/request.handler";
 import { sendResponse } from "../handlers/response.handler";
 import { AuctionMapperImpl } from "../mappers/auction.mapper";
+import { auctionProcessServiceFactory } from "../services/auction-process.service";
 import { auctionServiceFactory } from "../services/auction.service";
 import { ICreateAuctionDTO, IPlainAuctionDTO } from "../types/dto/auction.dto";
 
 export class AuctionController {
     @logger
     static async createAuction(req: Request, res: Response) {
-        const auctionService = auctionServiceFactory();
+        const auctionProcessService = auctionProcessServiceFactory();
         const auctionMapper = new AuctionMapperImpl();
 
         const data: ICreateAuctionDTO = ApiRequest.getValidatedParams(req);
         const user = ApiRequest.getUserDTO(req);
 
-        const auction = await auctionService.createAuction(data, user.id);
+        const auction = await auctionProcessService.createOrUpdateAuction(data, user.id, null);
         if (!auction) {
             return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Auction was not created.");
         }
@@ -26,12 +27,13 @@ export class AuctionController {
 
     @logger
     static async updateAuction(req: Request, res: Response) {
-        const auctionService = auctionServiceFactory();
+        const auctionProcessService = auctionProcessServiceFactory();
         const auctionMapper = new AuctionMapperImpl();
 
         const { id, ...data } = ApiRequest.getValidatedParams(req);
+        const user = ApiRequest.getUserDTO(req);
 
-        const auction = await auctionService.updateAuction(data as IPlainAuctionDTO, id);
+        const auction = await auctionProcessService.createOrUpdateAuction(data as ICreateAuctionDTO, user.id, id);
         if (!auction) {
             return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Auction was not updated.");
         }

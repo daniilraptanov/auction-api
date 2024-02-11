@@ -1,15 +1,16 @@
 import Joi from "joi";
-import { MAX_RATE } from "../constants";
+import { MAX_AUCTION_IMAGES, MAX_RATE, MIN_AUCTION_IMAGES } from "../constants";
 import { AuctionStatus } from "../types/enums/auction-status.enum";
+import { commonImageSchema } from "./image.schemas";
 import { paginationSchema } from "./pagination.schemas";
 
 const commonAuctionSchema = Joi.object({
     description: Joi.string().min(5).max(255).required(),
-    status: Joi.number().valid(
-        AuctionStatus.CREATED,
-        AuctionStatus.PROCESSING,
-        AuctionStatus.FINISHED,
-    ).optional()
+    imagesSources: Joi.array()
+        .items(commonImageSchema)
+        .min(MIN_AUCTION_IMAGES)
+        .max(MAX_AUCTION_IMAGES)
+        .required()
 });
 
 export const createAuctionSchema = commonAuctionSchema.append({
@@ -22,7 +23,12 @@ export const createAuctionSchema = commonAuctionSchema.append({
 });
 
 export const updateAuctionSchema = commonAuctionSchema.append({
-    id: Joi.string().required()
+    id: Joi.string().required(),
+    status: Joi.number().valid(
+        AuctionStatus.CREATED,
+        AuctionStatus.PROCESSING,
+        AuctionStatus.FINISHED,
+    ).optional()
 });
 
 export const getAllAuctionsSchema = paginationSchema.append({

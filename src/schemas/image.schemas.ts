@@ -1,8 +1,12 @@
 import Joi from "joi";
 
-export const imageSchema = Joi.object({
-    auctionId: Joi.string().required(),
+
+export const commonImageSchema = Joi.object({
     source: Joi.string().required()
+});
+
+export const imageSchema = commonImageSchema.append({
+    auctionId: Joi.string().required(),
 });
 
 export const deleteImageSchema = Joi.object({

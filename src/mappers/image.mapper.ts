@@ -7,6 +7,7 @@ export class ImageMapperImpl extends SimpleMapper<ImageModel, ImageDTO> {
         "id",
         "source",
         "auctionId",
+        "userId",
         "createdAt",
         "updatedAt"
     ];

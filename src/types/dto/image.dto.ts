@@ -1,4 +1,5 @@
 export interface ICreateImageDTO {
+    id?: string;
     source: string;
 }
 

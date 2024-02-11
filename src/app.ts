@@ -22,8 +22,8 @@ app.use(`${API_V1}/auth`, AuthRouter);
 // Need authorization
 app.use(API_V1, auth);
 app.use(`${API_V1}/auctions`, AuctionsRouter);
-app.use(`${API_V1}/images`, ImagesRouter);
 app.use(`${API_V1}/rates`, RatesRouter);
+// app.use(`${API_V1}/images`, ImagesRouter);
 
 
 app.listen(Config.app.PORT, () => {

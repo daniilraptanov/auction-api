@@ -4,6 +4,7 @@ export interface IRateModel extends IRateDTO {}
 
 export interface IRateService {
     createRate(dto: ICreateRateDTO, auctionId: string, userId: string): Promise<IRateModel>;
+    updateRate(dto: ICreateRateDTO, id: string): Promise<IRateModel>;
     getAllRates(page: number, limit: number, auctionId: string): Promise<IRateModel[]>;
 }
 

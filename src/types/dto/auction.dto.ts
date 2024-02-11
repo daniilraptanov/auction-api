@@ -1,5 +1,5 @@
 import { AuctionStatus } from "../enums/auction-status.enum";
-import { ImageDTO } from "./image.dto";
+import { ICreateImageDTO, ImageDTO } from "./image.dto";
 import { IRateDTO } from "./rate.dto";
 
 export interface IPlainAuctionDTO {
@@ -9,6 +9,7 @@ export interface IPlainAuctionDTO {
 
 export interface ICreateAuctionDTO extends IPlainAuctionDTO {
     initialRate: number;
+    images: ICreateImageDTO[];
 }
 
 export interface IAuctionDTO extends IPlainAuctionDTO {
