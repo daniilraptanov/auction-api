@@ -5,12 +5,10 @@ export class PaginationService {
     
     static calculateOffset(page: number, limit: number): IOffsetPagination {
         limit = Math.abs(limit);
-        const isAllPages = page === PaginationService.ALL_PAGES
+        // const isAllPages = page === PaginationService.ALL_PAGES
         return {
             take: limit,
-            skip: isAllPages 
-                ? page
-                : (limit * (Math.abs(page) - 1))
+            skip: limit * (Math.abs(page) - 1)
         }
     }
 
