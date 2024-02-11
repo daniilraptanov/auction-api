@@ -4,6 +4,7 @@ export interface ICreateImageDTO {
 
 export interface ImageDTO extends ICreateImageDTO {
     id: string;
+    userId: string;
     auctionId: string;
 
     createdAt: Date;

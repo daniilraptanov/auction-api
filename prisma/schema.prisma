@@ -17,6 +17,7 @@ model User {
 
   auctions Auction[]
   rates    Rate[]
+  images   Image[]
 }
 
 model Auction {
@@ -43,6 +44,9 @@ model Image {
   updatedAt DateTime @updatedAt
 
   source String @db.Text
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id])
 
   auctionId String  @db.Uuid
   auction   Auction @relation(fields: [auctionId], references: [id])

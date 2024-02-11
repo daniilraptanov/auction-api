@@ -3,11 +3,12 @@ import { ImageModel, ImageService } from "../types/image.type";
 import { SimpleService } from "./simple.service";
 
 class ImageServiceImpl extends SimpleService implements ImageService {
-    async createImage(dto: ICreateImageDTO, auctionId: string): Promise<ImageModel> {
+    async createImage(dto: ICreateImageDTO, auctionId: string, userId: string): Promise<ImageModel> {
         return this._dbInstance.image.create({
             data: {
               source: dto.source,
               auctionId,
+              userId
             }
         });
     }

@@ -14,8 +14,9 @@ export class ImageController {
     const imageMapper = new ImageMapperImpl();
 
     const { auctionId, ...data} = ApiRequest.getValidatedParams(req);
+    const user = ApiRequest.getUserDTO(req);
 
-    const image = await imageService.createImage(data as ICreateImageDTO, auctionId);
+    const image = await imageService.createImage(data as ICreateImageDTO, auctionId, user.id);
     if (!image) {
         return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Image does not created.");
     };
