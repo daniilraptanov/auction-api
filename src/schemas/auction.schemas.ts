@@ -6,7 +6,7 @@ import { paginationSchema } from "./pagination.schemas";
 
 const commonAuctionSchema = Joi.object({
     description: Joi.string().min(5).max(255).required(),
-    imagesSources: Joi.array()
+    images: Joi.array()
         .items(commonImageSchema)
         .min(MIN_AUCTION_IMAGES)
         .max(MAX_AUCTION_IMAGES)
@@ -22,7 +22,7 @@ export const createAuctionSchema = commonAuctionSchema.append({
     return schema;
 });
 
-export const updateAuctionSchema = commonAuctionSchema.append({
+export const updateAuctionSchema = createAuctionSchema.append({
     id: Joi.string().required(),
     status: Joi.number().valid(
         AuctionStatus.CREATED,

@@ -23,14 +23,14 @@ class AuctionProcessServiceImpl extends SimpleService implements IAuctionProcess
             const rateDTO = { rate: dto.initialRate };
             const initialRate = auctionId
                 ? await rateService.updateRate(rateDTO, auction.lastRate.id)
-                : await rateService.createRate(rateDTO, auctionId, userId);
+                : await rateService.createRate(rateDTO, auction.id, userId);
     
             if (!initialRate) {
                 throw new Error("Initial rate was not created.");
             }
 
 
-            const images = await imageService.uploadImages(dto.images, auctionId, userId);
+            const images = await imageService.uploadImages(dto.images, auction.id, userId);
             if (!images) {
                 throw new Error("Images was not created.");
             }
