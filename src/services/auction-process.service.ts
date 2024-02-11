@@ -55,7 +55,7 @@ class AuctionProcessServiceImpl extends SimpleService implements IAuctionProcess
                 throw new Error("Rate was not created.");
             }
 
-            const updatedAuction = prisma.auction.update({
+            const updatedAuction = await prisma.auction.update({
                 data: { lastRateId: rate.id },
                 where: { id: auctionId },
                 include: { lastRate: true }
