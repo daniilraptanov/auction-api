@@ -1,6 +1,7 @@
 import { IAuctionModel, IAuctionService } from "../types/auction.type";
 import { IPlainAuctionDTO } from "../types/dto/auction.dto";
 import { AuctionStatus } from "../types/enums/auction-status.enum";
+import { IPaginateModel } from "../types/tools/pagination.type";
 import { PaginationService } from "./pagination.service";
 import { SimpleService } from "./simple.service";
 
@@ -36,7 +37,7 @@ class AuctionServiceImpl extends SimpleService implements IAuctionService {
         limit: number, 
         getMainImage: boolean = false,
         getLastRate: boolean = false
-    ): Promise<IAuctionModel[]> {
+    ): Promise<IPaginateModel<IAuctionModel>> {
         const { take, skip } = PaginationService.calculateOffset(page, limit);
         
         const include = {};
@@ -46,10 +47,17 @@ class AuctionServiceImpl extends SimpleService implements IAuctionService {
         if (getLastRate) {
             include["lastRate"] = true;
         }
+
+        const [rows, totalRows] = await this._dbInstance.$transaction([
+            this._dbInstance.auction.findMany({ take, skip, include }),
+            this._dbInstance.auction.count()
+        ]);
         
-        return this._dbInstance.auction.findMany({
-            take, skip, include
-        });
+        return { 
+            rows, 
+            totalRows,
+            totalPage: PaginationService.calculateTotalPage(totalRows, limit)
+        };
     }
 
     async getAuctionById(

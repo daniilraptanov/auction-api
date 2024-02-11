@@ -1,5 +1,6 @@
 import { ICreateRateDTO } from "../types/dto/rate.dto";
 import { IRateModel, IRateService } from "../types/rate.type";
+import { IPaginateModel } from "../types/tools/pagination.type";
 import { PaginationService } from "./pagination.service";
 import { SimpleService } from "./simple.service";
 
@@ -21,11 +22,20 @@ class RateServiceImpl extends SimpleService implements IRateService {
         });
     }
 
-    async getAllRates(page: number, limit: number, auctionId: string): Promise<IRateModel[]> {
+    async getAllRates(page: number, limit: number, auctionId: string): Promise<IPaginateModel<IRateModel>> {
         const { take, skip } = PaginationService.calculateOffset(page, limit);
-        return this._dbInstance.rate.findMany({
-            take, skip, where: { auctionId }
-        });
+        const where = { auctionId };
+
+        const [rows, totalRows] = await this._dbInstance.$transaction([
+            this._dbInstance.rate.findMany({ take, skip, where }),
+            this._dbInstance.rate.count({ where })
+        ]);
+
+        return {
+            rows,
+            totalRows,
+            totalPage: PaginationService.calculateTotalPage(totalRows, limit)
+        }
     }
 }
 

@@ -43,7 +43,10 @@ export class RateController {
         return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR);
     };
 
-    sendResponse(res, StatusCodes.OK, "Rates was returned", rates.map(rate => rateMapper.toDTO(rate)));
+    sendResponse(res, StatusCodes.OK, "Rates was returned", {
+      ...rates,
+      rows: rates.rows.map(rate => rateMapper.toDTO(rate))
+    });
   }
 }
 

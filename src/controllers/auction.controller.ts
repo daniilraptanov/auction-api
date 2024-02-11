@@ -53,7 +53,10 @@ export class AuctionController {
             return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR);
         }
 
-        sendResponse(res, StatusCodes.OK, "Auctions was returned.", auctions.map(auction => auctionMapper.toDTO(auction)));
+        sendResponse(res, StatusCodes.OK, "Auctions was returned.", {
+            ...auctions,
+            rows: auctions.rows.map(auction => auctionMapper.toDTO(auction))
+        });
     }
 
     @logger
