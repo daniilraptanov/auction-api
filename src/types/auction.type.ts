@@ -1,4 +1,6 @@
 import { IAuctionDTO, ICreateAuctionDTO, IExtendAuctionDTO, IPlainAuctionDTO } from "./dto/auction.dto";
+import { ICreateRateDTO } from "./dto/rate.dto";
+import { IRateModel } from "./rate.type";
 import { IPaginateModel } from "./tools/pagination.type";
 
 export interface IAuctionModel extends IAuctionDTO {}
@@ -24,4 +26,5 @@ export interface IAuctionService {
 
 export interface IAuctionProcessService {
     createOrUpdateAuction(dto: ICreateAuctionDTO, userId: string, auctionId: string): Promise<IAuctionModel>;
+    createAuctionRate(dto: ICreateRateDTO, auctionId: string, userId: string): Promise<IRateModel>;
 }

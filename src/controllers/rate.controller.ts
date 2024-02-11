@@ -7,11 +7,12 @@ import { rateServiceFactory } from "../services/rate.service";
 import { RateMapperImpl } from "../mappers/rate.mapper";
 import { ICreateRateDTO } from "../types/dto/rate.dto";
 import { auctionServiceFactory } from "../services/auction.service";
+import { auctionProcessServiceFactory } from "../services/auction-process.service";
 
 export class RateController {
   @logger
   static async createRate(req: Request, res: Response) {
-    const rateService = rateServiceFactory();
+    const auctionProcessService = auctionProcessServiceFactory();
     const auctionService = auctionServiceFactory();
     const rateMapper = new RateMapperImpl();
 
@@ -23,7 +24,7 @@ export class RateController {
         return sendResponse(res, StatusCodes.NOT_FOUND, "Auction not found.");
     }
 
-    const rate = await rateService.createRate(data as ICreateRateDTO, auctionId, user.id);
+    const rate = await auctionProcessService.createAuctionRate(data as ICreateRateDTO, auctionId, user.id);
     if (!rate) {
         return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR, "Rate does not created.");
     };

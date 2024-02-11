@@ -1,5 +1,7 @@
 import { IAuctionModel, IAuctionProcessService } from "../types/auction.type";
 import { ICreateAuctionDTO } from "../types/dto/auction.dto";
+import { ICreateRateDTO } from "../types/dto/rate.dto";
+import { IRateModel } from "../types/rate.type";
 import { auctionServiceFactory } from "./auction.service";
 import { imageServiceFactory } from "./image.service";
 import { rateServiceFactory } from "./rate.service";
@@ -40,6 +42,30 @@ class AuctionProcessServiceImpl extends SimpleService implements IAuctionProcess
                 where: { id: auction.id },
                 include: { lastRate: true }
             });    
+        });
+    }
+
+    async createAuctionRate(dto: ICreateRateDTO, auctionId: string, userId: string): Promise<IRateModel> {
+        return this._dbInstance.$transaction(async (prisma) => {
+            const rateService = rateServiceFactory(prisma);
+
+            const rate = await rateService.createRate(dto, auctionId, userId);
+            
+            if (!rate) {
+                throw new Error("Rate was not created.");
+            }
+
+            const updatedAuction = prisma.auction.update({
+                data: { lastRateId: rate.id },
+                where: { id: auctionId },
+                include: { lastRate: true }
+            });
+
+            if (!updatedAuction) {
+                throw new Error("Auction was not updated.");
+            }
+
+            return rate;
         });
     }
 }
