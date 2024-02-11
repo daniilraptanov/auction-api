@@ -55,7 +55,7 @@ export class AuctionController {
             maxRate 
         } = ApiRequest.getValidatedParams(req);
 
-        const auctions = await auctionService.getAllAuctions(page, limit, getMainImage, getLastRate, minRate, maxRate);
+        const auctions = await auctionService.getAllAuctions(page, limit, getMainImage, getLastRate, +minRate, +maxRate);
         if (!auctions) {
             return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR);
         }

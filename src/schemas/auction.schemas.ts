@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { MAX_AUCTION_IMAGES, MAX_RATE, MIN_AUCTION_IMAGES } from "../constants";
+import { MAX_AUCTION_IMAGES, MAX_RATE, MIN_AUCTION_IMAGES, MIN_RATE } from "../constants";
 import { AuctionStatus } from "../types/enums/auction-status.enum";
 import { commonImageSchema } from "./image.schemas";
 import { paginationSchema } from "./pagination.schemas";
@@ -34,15 +34,9 @@ export const updateAuctionSchema = createAuctionSchema.append({
 export const getAllAuctionsSchema = paginationSchema.append({
     getMainImage: Joi.boolean().optional(),
     getLastRate: Joi.boolean().optional(),
-    minRate: Joi.number().max(MAX_RATE).optional(),
-    maxRate: Joi.number().max(MAX_RATE).optional()
+    minRate: Joi.number().min(MIN_RATE).max(MAX_RATE).optional(),
+    maxRate: Joi.number().min(MIN_RATE).max(MAX_RATE).optional()
 }).custom((schema) => {
-    if (schema.minRate && (schema.minRate <= 0)) {
-        throw new Error("Parameter <minRate> should be greater than zero.");
-    }
-    if (schema.maxRate && (schema.maxRate <= 0)) {
-        throw new Error("Parameter <maxRate> should be greater than zero.");
-    }
     if (schema.minRate && schema.maxRate && (schema.maxRate < schema.minRate)) {
         throw new Error("Parameter <maxRate> should be greater than <minRate>.");
     }

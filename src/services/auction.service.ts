@@ -41,7 +41,7 @@ class AuctionServiceImpl extends SimpleService implements IAuctionService {
         maxRate?: number
     ): Promise<IPaginateModel<IAuctionModel>> {
         const { take, skip } = PaginationService.calculateOffset(page, limit);
-        const useWhere = minRate || maxRate;
+        const useWhere = !!(minRate || maxRate);
         
         const include = {};
         if (getMainImage) {
