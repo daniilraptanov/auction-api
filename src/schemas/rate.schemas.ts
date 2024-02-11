@@ -3,7 +3,7 @@ import { MAX_RATE } from "../constants";
 import { paginationSchema } from "./pagination.schemas";
 
 export const rateSchema = Joi.object({
-    auctionId: Joi.string().required(),
+    auctionId: Joi.string().guid({ version: 'uuidv4' }).required(),
     rate: Joi.number().max(MAX_RATE).required()
 }).custom((schema) => {
     if (schema.rate <= 0) {
@@ -13,5 +13,5 @@ export const rateSchema = Joi.object({
 });
 
 export const getAllRatesSchema = paginationSchema.append({
-    auctionId: Joi.string().required()
+    auctionId: Joi.string().guid({ version: 'uuidv4' }).required()
 });

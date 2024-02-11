@@ -23,7 +23,7 @@ export const createAuctionSchema = commonAuctionSchema.append({
 });
 
 export const updateAuctionSchema = createAuctionSchema.append({
-    id: Joi.string().required(),
+    id: Joi.string().guid({ version: 'uuidv4' }).required(),
     status: Joi.number().valid(
         AuctionStatus.CREATED,
         AuctionStatus.PROCESSING,
@@ -44,7 +44,7 @@ export const getAllAuctionsSchema = paginationSchema.append({
 });
 
 export const getAuctionSchema = Joi.object({
-    id: Joi.string().required(),
+    id: Joi.string().guid({ version: 'uuidv4' }).required(),
     getImages: Joi.boolean().optional(),
     getLastRate: Joi.boolean().optional()
 });
