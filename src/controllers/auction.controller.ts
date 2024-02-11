@@ -46,9 +46,16 @@ export class AuctionController {
         const auctionService = auctionServiceFactory();
         const auctionMapper = new AuctionMapperImpl();
 
-        const { page, limit, getMainImage, getLastRate } = ApiRequest.getValidatedParams(req);
+        const { 
+            page, 
+            limit, 
+            getMainImage, 
+            getLastRate,
+            minRate,
+            maxRate 
+        } = ApiRequest.getValidatedParams(req);
 
-        const auctions = await auctionService.getAllAuctions(page, limit, getMainImage, getLastRate);
+        const auctions = await auctionService.getAllAuctions(page, limit, getMainImage, getLastRate, minRate, maxRate);
         if (!auctions) {
             return sendResponse(res, StatusCodes.INTERNAL_SERVER_ERROR);
         }

@@ -36,9 +36,12 @@ class AuctionServiceImpl extends SimpleService implements IAuctionService {
         page: number, 
         limit: number, 
         getMainImage: boolean = false,
-        getLastRate: boolean = false
+        getLastRate: boolean = false,
+        minRate?: number,
+        maxRate?: number
     ): Promise<IPaginateModel<IAuctionModel>> {
         const { take, skip } = PaginationService.calculateOffset(page, limit);
+        const useWhere = minRate || maxRate;
         
         const include = {};
         if (getMainImage) {
@@ -48,9 +51,18 @@ class AuctionServiceImpl extends SimpleService implements IAuctionService {
             include["lastRate"] = true;
         }
 
+        const where = {lastRate: {rate: {}}};
+        if (minRate) {
+            where.lastRate.rate["gte"] = minRate;
+        }
+        if (maxRate) {
+            where.lastRate.rate["lte"] = maxRate;
+        }
+
+        const whereToQuery = useWhere ? where : {};
         const [rows, totalRows] = await this._dbInstance.$transaction([
-            this._dbInstance.auction.findMany({ take, skip, include }),
-            this._dbInstance.auction.count()
+            this._dbInstance.auction.findMany({ take, skip, include, where: whereToQuery }),
+            this._dbInstance.auction.count({ where: whereToQuery })
         ]);
         
         return { 

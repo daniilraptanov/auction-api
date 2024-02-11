@@ -10,7 +10,14 @@ export interface IAuctionMapper {
 export interface IAuctionService {
     createAuction(dto: IPlainAuctionDTO, userId: string): Promise<IAuctionModel>;
     updateAuction(dto: IPlainAuctionDTO, id: string, getLastRate?: boolean): Promise<IAuctionModel>;
-    getAllAuctions(page: number, limit: number, getMainImage?: boolean, getLastRate?: boolean): Promise<IPaginateModel<IAuctionModel>>;
+    getAllAuctions(
+        page: number, 
+        limit: number, 
+        getMainImage?: boolean, 
+        getLastRate?: boolean,
+        minRate?: number,
+        maxRate?: number
+    ): Promise<IPaginateModel<IAuctionModel>>;
     getAuctionById(id: string, getImages?: boolean, getLastRate?: boolean): Promise<IAuctionModel>;
 }
 

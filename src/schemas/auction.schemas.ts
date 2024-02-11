@@ -33,7 +33,17 @@ export const updateAuctionSchema = createAuctionSchema.append({
 
 export const getAllAuctionsSchema = paginationSchema.append({
     getMainImage: Joi.boolean().optional(),
-    getLastRate: Joi.boolean().optional()
+    getLastRate: Joi.boolean().optional(),
+    minRate: Joi.number().max(MAX_RATE).optional(),
+    maxRate: Joi.number().max(MAX_RATE).optional()
+}).custom((schema) => {
+    if (schema.minRate <= 0) {
+        throw new Error("Parameter <minRate> should be greater than zero.");
+    }
+    if (schema.maxRate <= 0) {
+        throw new Error("Parameter <maxRate> should be greater than zero.");
+    }
+    return schema;
 });
 
 export const getAuctionSchema = Joi.object({
